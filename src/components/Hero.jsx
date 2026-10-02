@@ -5,7 +5,8 @@ export default function Hero() {
     <section className="hero page-section" id="home">
       <div className="hero-content">
         <div className="hero-kicker">COLLECTION ’26</div>
-        <h1>Manish</h1>
+        <h1>Manish<span className="sr-only">, React.js Developer &amp; Cybersecurity Trainee</span></h1>
+        <h2 className="sr-only">About</h2>
         <p className="hero-role"><em>React.js Developer</em> &amp; Cybersecurity Trainee</p>
         <p className="hero-description">A Computer Science student based in Jalandhar, India.<br className="desktop-break" /> Building responsive web experiences and learning to make them safer.</p>
         <div className="hero-actions">

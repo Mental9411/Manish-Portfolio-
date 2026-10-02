@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://manish-portfolio-six-hazel.vercel.app/sitemap.xml

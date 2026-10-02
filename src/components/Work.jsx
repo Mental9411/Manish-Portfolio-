@@ -1,6 +1,7 @@
 import Arrow from './Arrow.jsx';
 
 const workItems = [
+  // TODO: Add public case study and repository links when real project URLs are available.
   {
     id: '01',
     label: 'FRONTEND DEVELOPMENT',
@@ -35,7 +36,7 @@ const workItems = [
 
 function WorkCard({ item }) {
   return (
-    <article className="work-card js-reveal">
+    <article className="work-card js-reveal" id={`work-${item.id}`}>
       <div className={`work-art ${item.className}`} aria-hidden="true">
         <span className="art-grain" />
         <span className="art-mark">{item.mark}</span>
@@ -53,6 +54,7 @@ function WorkCard({ item }) {
 export default function Work() {
   return (
     <section className="work-section page-section" id="work">
+      <h2 className="sr-only">Projects</h2>
       <div className="section-intro work-intro">
         <div><h2>Selected <em>work.</em></h2><p>A selection of my work and hands-on experience across development, security, and content.</p></div>
         <a className="view-link" href="#journey">View résumé <Arrow /></a>

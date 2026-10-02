@@ -1,0 +1,20 @@
+# Manish [TODO: surname]
+
+React.js developer and cybersecurity trainee building thoughtful, responsive web experiences. Explore selected work in React, JavaScript and web security.
+
+## Main sections
+- [About](https://manish-portfolio-six-hazel.vercel.app/#home)
+- [Selected work](https://manish-portfolio-six-hazel.vercel.app/#work)
+- [Journey](https://manish-portfolio-six-hazel.vercel.app/#journey)
+- [Skills](https://manish-portfolio-six-hazel.vercel.app/#explorations)
+- [Contact](https://manish-portfolio-six-hazel.vercel.app/#contact)
+
+## Featured work and experience
+- [React.js development](https://manish-portfolio-six-hazel.vercel.app/#work-01)
+- [Ethical hacking](https://manish-portfolio-six-hazel.vercel.app/#work-02)
+- [Video and content creation](https://manish-portfolio-six-hazel.vercel.app/#work-03)
+
+## Writing
+- [A component should make change easier](https://manish-portfolio-six-hazel.vercel.app/blog/components-and-change/)
+- [Curiosity needs a clear scope](https://manish-portfolio-six-hazel.vercel.app/blog/curiosity-and-scope/)
+- [Editing is rhythm before effects](https://manish-portfolio-six-hazel.vercel.app/blog/editing-and-rhythm/)
