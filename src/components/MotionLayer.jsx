@@ -1,18 +1,20 @@
 import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function MotionLayer({ children }) {
   const root = useRef(null);
 
   useEffect(() => {
-    if (!root.current) return undefined;
+    let cancelled = false;
+    let cleanup;
 
-    const media = gsap.matchMedia(root);
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([gsapModule, triggerModule]) => {
+      if (cancelled || !root.current) return;
+      const gsap = gsapModule.default;
+      const ScrollTrigger = triggerModule.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
+      const media = gsap.matchMedia(root);
 
-    media.add('(prefers-reduced-motion: no-preference)', () => {
+      media.add('(prefers-reduced-motion: no-preference)', () => {
         gsap.from('.site-header', {
           y: -16,
           autoAlpha: 0,
@@ -93,9 +95,15 @@ export default function MotionLayer({ children }) {
 
         return () => cleanups.forEach((cleanup) => cleanup());
 
+      });
+
+      cleanup = () => media.revert();
     });
 
-    return () => media.revert();
+    return () => {
+      cancelled = true;
+      cleanup?.();
+    };
   }, []);
 
   return <div ref={root} className="motion-root">{children}</div>;

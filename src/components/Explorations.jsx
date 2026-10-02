@@ -25,6 +25,7 @@ const practice = [
 export default function Explorations() {
   return (
     <section className="explorations-section page-section" id="explorations">
+      <h2 className="sr-only">Skills</h2>
       <div className="exploration-heading">
         <div><h2>What I’m <em>learning.</em></h2><p>A growing toolkit across the things I enjoy building and exploring.</p></div>
         <div className="orbit-stamp" aria-hidden="true"><span>M</span><i>WEB · SECURITY · MEDIA</i></div>
