@@ -1,14 +1,8 @@
-import { useEffect } from 'react';
 import Arrow from './Arrow.jsx';
-import { posts } from './Blog.jsx';
+import { getBlogPost } from './Blog.jsx';
 
 export default function BlogArticle({ slug }) {
-  const post = posts.find((entry) => entry.slug === slug);
-
-  useEffect(() => {
-    document.title = post ? `${post.title} | Manish` : 'Note not found | Manish';
-    return () => { document.title = 'Manish'; };
-  }, [post]);
+  const post = getBlogPost(slug);
 
   if (!post) {
     return (

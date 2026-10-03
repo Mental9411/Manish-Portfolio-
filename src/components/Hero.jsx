@@ -4,7 +4,6 @@ export default function Hero() {
   return (
     <section className="hero page-section" id="home">
       <div className="hero-content">
-        <div className="hero-kicker">COLLECTION ’26</div>
         <h1>Manish<span className="sr-only">, React.js Developer &amp; Cybersecurity Trainee</span></h1>
         <h2 className="sr-only">About</h2>
         <p className="hero-role"><em>React.js Developer</em> &amp; Cybersecurity Trainee</p>

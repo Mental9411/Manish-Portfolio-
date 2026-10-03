@@ -66,7 +66,7 @@ export default function Journey() {
     <section className="journey-section" id="journey">
       <div className="journey-inner">
         <div className="journey-heading">
-          <div><span className="journey-eyebrow">A PERSONAL TIMELINE</span><h2>The steps that<br /><em>brought me here.</em></h2></div>
+          <div><h2>The steps that<br /><em>brought me here.</em></h2></div>
           <p>Each chapter brought a different kind of problem. I’ve kept a little of every one with me.</p>
         </div>
         <div className="journey-timeline">
