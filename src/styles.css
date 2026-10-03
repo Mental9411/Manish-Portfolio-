@@ -22,6 +22,7 @@ a { color: inherit; text-decoration: none; }
 ::selection { color: #080808; background: #efeeeb; }
 .skip-link { position: fixed; z-index: 50; top: -60px; left: 16px; padding: 12px 16px; color: #080808; background: #efeeeb; }
 .skip-link:focus { top: 16px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 .page-section { width: min(1066px, calc(100% - 64px)); margin-inline: auto; }
 .site-header { position: fixed; z-index: 30; top: max(16px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); }
 .nav-pill { display: flex; align-items: center; gap: 3px; padding: 7px 10px 7px 7px; border: 1px solid #282828; border-radius: 99px; background: rgba(18,18,18,.88); box-shadow: 0 8px 35px #0005; backdrop-filter: blur(16px); }
@@ -34,9 +35,8 @@ a { color: inherit; text-decoration: none; }
 .arrow { display: inline-block; margin-left: 4px; font-size: 15px; font-style: normal; transition: transform .2s; }
 a:hover .arrow { transform: translate(2px,-2px); }
 .hero { position: relative; display: grid; min-height: 760px; height: 100svh; max-height: 1000px; place-items: center; text-align: center; }
-.hero-content { width: 100%; padding: 95px 0 76px; }
-.hero-kicker, .work-card-meta, .practice-meta, .stat-label { color: #8b8985; font: 10px var(--mono); letter-spacing: .19em; }
-.hero-kicker { margin-bottom: 27px; letter-spacing: .25em; }
+.hero-content { width: 100%; padding: 76px 0; }
+.work-card-meta, .practice-meta, .stat-label { color: #8b8985; font: 10px var(--mono); letter-spacing: .19em; }
 .hero h1 { margin: 0; font-family: var(--serif); font-size: clamp(82px, 13.1vw, 164px); font-weight: 500; font-style: italic; line-height: .95; letter-spacing: -.075em; }
 .hero-role { margin: 30px 0 13px; font-size: 17px; font-weight: 500; }
 .hero-role em { font-family: var(--serif); font-weight: 500; }
@@ -80,11 +80,10 @@ a:hover .arrow { transform: translate(2px,-2px); }
 .work-description { max-width: 470px; margin: 18px 0 14px; color: #8e8b86; font-size: 12px; line-height: 1.75; }
 .work-tags { display: flex; flex-wrap: wrap; gap: 7px; margin: 0; padding: 0; list-style: none; }
 .work-tags li { padding: 7px 10px; border: 1px solid #2c2b29; border-radius: 30px; color: #b8b4ac; font: 9px var(--mono); }
-.journey-section { position: relative; overflow: hidden; padding: 112px clamp(32px,7.2vw,128px) 86px; border-top: 1px solid var(--line); background: radial-gradient(ellipse at 26% 54%,#171715 0,#10100f 43%,#0b0b0a 100%); }
+.journey-section { position: relative; overflow: hidden; padding: 112px clamp(32px,7.2vw,128px) 86px; border-top: 1px solid var(--line); background: #000; }
 .journey-inner { width: min(1420px,100%); margin: 0 auto; }
 .journey-heading { display: grid; grid-template-columns: 1.1fr .55fr; gap: 10%; align-items: end; margin-bottom: 55px; }
-.journey-eyebrow { color: #898da2; font: 9px var(--mono); letter-spacing: .18em; }
-.journey-heading h2 { margin: 20px 0 0; font-size: clamp(53px,7vw,94px); font-weight: 500; line-height: .99; letter-spacing: -.075em; }
+.journey-heading h2 { margin: 0; font-size: clamp(53px,7vw,94px); font-weight: 500; line-height: .99; letter-spacing: -.075em; }
 .journey-heading h2 em { color: #c5b39a; font-family: var(--serif); font-weight: 500; }
 .journey-heading>p { max-width: 370px; margin: 0 0 13px; color: #a09d98; font-size: 13px; line-height: 1.8; }
 .journey-timeline { position: relative; }
@@ -158,6 +157,10 @@ a:hover .arrow { transform: translate(2px,-2px); }
 .orbit-stamp i { position: absolute; bottom: -20px; color: #77736b; font: 7px var(--mono); font-style: normal; letter-spacing: .12em; white-space: nowrap; }
 .practice-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
 .practice-card { position: relative; min-height: 348px; padding: 19px; overflow: hidden; border: 1px solid #282725; border-radius: 15px; background: #10100f; }
+.practice-card { padding: 0; transition: border-color .25s, background .25s, box-shadow .25s; }
+.practice-card.is-expanded { border-color: #665745; background: #11100e; box-shadow: 0 18px 40px #0005; }
+.practice-card-trigger { display: block; width: 100%; padding: 19px; border: 0; color: inherit; background: none; text-align: left; cursor: pointer; }
+.practice-card-trigger:focus-visible,.practice-collapse:focus-visible { outline: 2px solid #d4c4ad; outline-offset: -4px; border-radius: 10px; }
 .practice-meta { display: flex; justify-content: space-between; color: #76736c; font-size: 8px; letter-spacing: .12em; }
 .practice-art { position: relative; display: grid; height: 135px; place-items: center; margin: 11px -2px 18px; overflow: hidden; }
 .practice-web .practice-art { background: radial-gradient(ellipse,#443d33,#111 70%); }
@@ -167,10 +170,20 @@ a:hover .arrow { transform: translate(2px,-2px); }
 .practice-ring { position: absolute; width: 128px; height: 76px; border: 1px solid #d7cbb04f; border-radius: 50%; transform: rotate(-28deg); }
 .practice-ring::before,.practice-ring::after { position: absolute; inset: 0; border: 1px solid #d7cbb044; border-radius: 50%; content: ''; transform: rotate(58deg); }
 .practice-ring::after { transform: rotate(-58deg); }
-.practice-card h3 { margin: 0 0 6px; font-size: 17px; font-weight: 500; }
-.practice-card>p { margin: 0 0 13px; color: #88857f; font-size: 10px; line-height: 1.6; }
-.practice-card ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
-.practice-card li { padding: 6px 8px; border: 1px solid #2e2c29; border-radius: 30px; color: #a9a59d; font: 8px var(--mono); }
+.practice-title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+.practice-title { font-size: 17px; font-weight: 500; }
+.practice-expand-mark { display: grid; width: 30px; height: 30px; flex: none; place-items: center; border: 1px solid #37332c; border-radius: 50%; color: #d4c4ad; font-size: 19px; }
+.practice-summary { display: block; margin-bottom: 13px; color: #aaa69d; font-size: 10px; line-height: 1.6; }
+.practice-skills,.practice-tools { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.practice-skill,.practice-tools li { padding: 7px 9px; border: 1px solid #3a362f; border-radius: 30px; color: #c4b9a9; font: 9px var(--mono); }
+.practice-details { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .36s ease; }
+.practice-details.is-open { grid-template-rows: 1fr; }
+.practice-details-inner { min-height: 0; overflow: hidden; padding-inline: 19px; opacity: 0; transition: opacity .25s ease; }
+.practice-details.is-open .practice-details-inner { padding-bottom: 19px; opacity: 1; }
+.practice-details-description { margin: 0 0 16px; color: #d0cbc1; font-size: 12px; line-height: 1.75; }
+.practice-details-inner h4 { margin: 16px 0 7px; color: #aaa18f; font: 9px var(--mono); letter-spacing: .13em; text-transform: uppercase; }
+.practice-details-copy { margin: 0; color: #969188; font-size: 11px; line-height: 1.7; }
+.practice-collapse { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; margin-top: 14px; padding: 0 12px; border: 1px solid #37332c; border-radius: 99px; color: #d4c4ad; background: transparent; font: 10px var(--mono); cursor: pointer; }
 .stats-section { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; padding: 47px 0 57px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
 .stat-item { display: flex; align-items: center; flex-direction: column; padding: 12px 8px; }
 .stat-item+.stat-item { border-left: 1px solid var(--line); }
@@ -203,11 +216,12 @@ a:hover .arrow { transform: translate(2px,-2px); }
   .art-mark { width: 135px; height: 135px; font-size: 58px; }
   .work-react .art-mark::before,.work-react .art-mark::after { width: 170px; height: 68px; }
   .practice-grid { gap: 10px; }
-  .practice-card { padding: 13px; }
+  .practice-card-trigger { padding: 13px; }
+  .practice-details-inner { padding-inline: 13px; }
   .practice-art { height: 110px; }
-  .practice-card h3 { font-size: 15px; }
-  .practice-card>p { font-size: 9px; }
-  .practice-card li { font-size: 7px; }
+  .practice-title { font-size: 15px; }
+  .practice-summary { font-size: 9px; }
+  .practice-skill,.practice-tools li { font-size: 7px; }
   .journey-section { padding: 88px 32px 72px; }
   .journey-heading { grid-template-columns: 1fr; gap: 22px; margin-bottom: 34px; }
   .journey-heading>p { max-width: 470px; }
@@ -242,7 +256,6 @@ a:hover .arrow { transform: translate(2px,-2px); }
   .page-section,.contact-section { width: calc(100% - 34px); }
   .hero { min-height: 640px; height: max(92svh, 640px); }
   .hero-content { padding-top: 79px; }
-  .hero-kicker { margin-bottom: 22px; font-size: 9px; }
   .hero h1 { font-size: clamp(75px,19vw,100px); }
   .hero-role { max-width: 330px; margin: 22px auto 10px; font-size: clamp(13px, 3.6vw, 14px); line-height: 1.5; }
   .hero-description { max-width: 330px; font-size: clamp(12px, 3.2vw, 13px); }
@@ -260,7 +273,7 @@ a:hover .arrow { transform: translate(2px,-2px); }
   .work-description { margin-block: 13px; font-size: 11px; }
   .journey-section { padding: 72px 17px 62px; }
   .journey-heading { gap: 17px; margin-bottom: 25px; }
-  .journey-heading h2 { margin-top: 15px; font-size: clamp(47px,13.3vw,67px); }
+  .journey-heading h2 { font-size: clamp(47px,13.3vw,67px); }
   .journey-heading>p { max-width: 340px; margin: 0; font-size: 11px; }
   .journey-timeline { padding-left: 1px; }
   .journey-timeline::before { position: absolute; top: 22px; bottom: 22px; left: 31px; width: 1px; background: repeating-linear-gradient(to bottom,#8880ff 0 2px,transparent 2px 10px); content: ''; opacity: .55; }
@@ -297,11 +310,13 @@ a:hover .arrow { transform: translate(2px,-2px); }
   .orbit-stamp span { font-size: 22px; }
   .orbit-stamp i { display: none; }
   .practice-grid { grid-template-columns: 1fr; gap: 12px; }
-  .practice-card { min-height: 0; padding: 16px; }
+  .practice-card { min-height: 0; }
+  .practice-card-trigger { padding: 16px; }
+  .practice-details-inner { padding-inline: 16px; }
   .practice-art { height: 126px; margin-bottom: 14px; }
-  .practice-card h3 { font-size: 17px; }
-  .practice-card>p { font-size: 10px; }
-  .practice-card li { font-size: 8px; }
+  .practice-title { font-size: 17px; }
+  .practice-summary { font-size: 10px; }
+  .practice-skill,.practice-tools li { font-size: 8px; }
   .stats-section { gap: 0; padding-block: 29px; }
   .stat-item { padding-inline: 3px; }
   .stat-number { font-size: 44px; }
@@ -318,4 +333,5 @@ a:hover .arrow { transform: translate(2px,-2px); }
 }
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .practice-details,.practice-details-inner { transition: none !important; }
 }

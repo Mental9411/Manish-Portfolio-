@@ -23,7 +23,7 @@ export default function MotionLayer({ children }) {
         });
 
         gsap.from(
-          ['.hero-kicker', '.hero h1', '.hero-role', '.hero-description', '.hero-actions'],
+          ['.hero h1', '.hero-role', '.hero-description', '.hero-actions'],
           {
             y: 22,
             autoAlpha: 0,
