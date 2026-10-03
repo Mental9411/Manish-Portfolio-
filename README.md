@@ -42,7 +42,10 @@ The site is built with React and Vite. It includes:
 - A compact expandable mobile navigation menu
 - Project, timeline, blog, skills, and experience sections
 - GSAP entrance and scroll effects, with reduced-motion support
-- A custom M favicon and downloadable résumé
+- A custom M favicon and downloadable résumé; DM Sans, DM Mono, and Playfair Display are locally hosted and preloaded
+- Analytics that remain off until a visitor accepts, with a changeable privacy preference
+- Prerendered blog, privacy, terms, and custom 404 pages
+- Production security headers and production source maps disabled
 
 ## Run locally
 
@@ -59,6 +62,27 @@ Vite prints a local address to open in your browser. To create and preview a pro
 npm run build
 npm run preview
 ```
+
+## Configure a Vercel deployment
+
+Deploy the project to Vercel with the repository root as the project root, `npm run build` as the build command, and `dist` as the output directory. The static portfolio works without secrets, but the contact form remains disabled until its services are configured.
+
+Copy `.env.example` to `.env.local` for local development, or add these settings in Vercel Environment Variables. Never commit `.env.local` or place private credentials in a `VITE_` variable.
+
+- `VITE_TURNSTILE_SITE_KEY`: public Cloudflare Turnstile site key for the exact hostname.
+- `TURNSTILE_SECRET_KEY`: private Turnstile secret used by the server function.
+- `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`: private Upstash REST credentials for rate limiting.
+- `RATE_LIMIT_SALT`: private random string of at least 32 characters for hashing rate-limit keys.
+- `RESEND_API_KEY`: private Resend API key.
+- `CONTACT_TO_EMAIL`: destination mailbox for contact messages.
+- `CONTACT_FROM_EMAIL`: sender on a domain verified with Resend.
+- `SITE_ORIGIN`: exact site origin without a trailing slash; defaults to the current production Vercel URL.
+
+Enable Vercel Web Analytics in the project dashboard to receive reports. Analytics code is loaded only after a visitor accepts. The contact form loads Cloudflare’s official Turnstile script only when mounted; the server validates each token through Siteverify.
+
+For local serverless form testing, link the project with Vercel CLI and run `vercel dev`; Vite’s dev server does not emulate `/api/contact`. Configure a local Turnstile test site key there. After configuring production secrets, redeploy and submit one test message end to end. Preview deployments need their own exact `SITE_ORIGIN` and matching Turnstile hostname.
+
+Vercel provisions HTTPS for its domains. The checked-in configuration also upgrades HTTP requests to the current production origin and applies HSTS; verify the project’s production domain and HTTPS redirect setting in Vercel before launch.
 
 ## Contact and links
 
