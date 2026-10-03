@@ -45,12 +45,25 @@ $iconBitmap.Save((Join-Path $public 'apple-touch-icon.png'), [System.Drawing.Ima
 $smallIcon = [System.Drawing.Bitmap]::new(32, 32)
 $smallGraphics = New-Graphics $smallIcon
 $smallGraphics.DrawImage($iconBitmap, 0, 0, 32, 32)
+$smallIcon.Save((Join-Path $public 'favicon-32x32.png'), [System.Drawing.Imaging.ImageFormat]::Png)
+$tinyIcon = [System.Drawing.Bitmap]::new(16, 16)
+$tinyGraphics = New-Graphics $tinyIcon
+$tinyGraphics.DrawImage($iconBitmap, 0, 0, 16, 16)
+$tinyIcon.Save((Join-Path $public 'favicon-16x16.png'), [System.Drawing.Imaging.ImageFormat]::Png)
+$pwa192 = [System.Drawing.Bitmap]::new(192, 192)
+$pwaGraphics192 = New-Graphics $pwa192
+$pwaGraphics192.DrawImage($iconBitmap, 0, 0, 192, 192)
+$pwa192.Save((Join-Path $public 'android-chrome-192x192.png'), [System.Drawing.Imaging.ImageFormat]::Png)
+$pwa512 = [System.Drawing.Bitmap]::new(512, 512)
+$pwaGraphics512 = New-Graphics $pwa512
+$pwaGraphics512.DrawImage($iconBitmap, 0, 0, 512, 512)
+$pwa512.Save((Join-Path $public 'android-chrome-512x512.png'), [System.Drawing.Imaging.ImageFormat]::Png)
 $handle = $smallIcon.GetHicon()
 $icon = [System.Drawing.Icon]::FromHandle($handle)
 $stream = [System.IO.File]::Create((Join-Path $public 'favicon.ico'))
 $icon.Save($stream)
 $stream.Dispose()
 
-foreach ($object in @($graphics, $line, $mono, $name, $role, $small, $muted, $card, $iconGraphics, $stroke, $letter, $format, $iconBitmap, $smallGraphics, $smallIcon, $icon)) {
+foreach ($object in @($graphics, $line, $mono, $name, $role, $small, $muted, $card, $iconGraphics, $stroke, $letter, $format, $iconBitmap, $smallGraphics, $smallIcon, $tinyGraphics, $tinyIcon, $pwaGraphics192, $pwa192, $pwaGraphics512, $pwa512, $icon)) {
     if ($null -ne $object) { $object.Dispose() }
 }

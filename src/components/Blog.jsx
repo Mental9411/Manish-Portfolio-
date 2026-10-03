@@ -27,6 +27,8 @@ export const posts = [
   },
 ];
 
+export const getBlogPost = (slug) => posts.find((entry) => entry.slug === slug);
+
 export default function Blog() {
   return (
     <section className="blog-section page-section" id="blog">

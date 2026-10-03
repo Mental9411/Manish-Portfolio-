@@ -5,9 +5,13 @@ export default function MotionLayer({ children }) {
 
   useEffect(() => {
     let cancelled = false;
+    let started = false;
     let cleanup;
 
-    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([gsapModule, triggerModule]) => {
+    const initializeMotion = () => {
+      if (started || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      started = true;
+      Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([gsapModule, triggerModule]) => {
       if (cancelled || !root.current) return;
       const gsap = gsapModule.default;
       const ScrollTrigger = triggerModule.ScrollTrigger;
@@ -26,7 +30,6 @@ export default function MotionLayer({ children }) {
           ['.hero h1', '.hero-role', '.hero-description', '.hero-actions'],
           {
             y: 22,
-            autoAlpha: 0,
             duration: 0.85,
             stagger: 0.1,
             ease: 'power3.out',
@@ -98,10 +101,18 @@ export default function MotionLayer({ children }) {
       });
 
       cleanup = () => media.revert();
-    });
+      }).catch(() => {});
+    };
+    const passiveOptions = { once: true, passive: true };
+    window.addEventListener('scroll', initializeMotion, passiveOptions);
+    window.addEventListener('pointerdown', initializeMotion, passiveOptions);
+    window.addEventListener('keydown', initializeMotion, { once: true });
 
     return () => {
       cancelled = true;
+      window.removeEventListener('scroll', initializeMotion);
+      window.removeEventListener('pointerdown', initializeMotion);
+      window.removeEventListener('keydown', initializeMotion);
       cleanup?.();
     };
   }, []);
